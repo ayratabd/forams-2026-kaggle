@@ -26,3 +26,18 @@ Also relied on procedural scene packing. Trained a lightweight 3D U-Net to predi
 **By Hanif Noer Rofiq**
 Separated localization and classification. Fine-tuned a DINOv2-Base vision transformer on 2D slice crops. Constructed a 2.5D CenterNet-style detector using 5 adjacent slices per channel across 3 orthogonal axes, fusing predictions via a 48-voxel 3D Non-Maximum Suppression (NMS) pass to eliminate duplicate detections.
 * [Write-up Link](https://www.kaggle.com/competitions/forams-2026/writeups/forams2026-3rd-place-approach)
+
+---
+
+## Our Hybrid Strategy
+
+Based on the strengths of the top competitors, we are building a hybrid pipeline that combines the best of both worlds:
+1. **The Data Engine (from 1st & 2nd Place):** We will use procedural data synthesis to artificially pack isolated shells together, perfectly simulating the densely packed test environment. 
+2. **The Architecture (from 3rd Place):** We will use a lightweight, memory-efficient 2.5D architecture (DINOv2 with a CenterNet detector) instead of computationally expensive 3D convolutions.
+
+By combining the synthetic data generator of the top solutions with the blazing fast 2.5D architecture of the 3rd place, we aim to achieve state-of-the-art results. 
+
+### Citations and References
+- **Competition Page**: [Forams 2026 - Kaggle](https://www.kaggle.com/competitions/forams-2026)
+- **2nd Place Repository**: [octavigrau/kaggle-forams2026](https://github.com/octavigrau/kaggle-forams2026) (Cloned in `references/2nd-place`)
+- **3rd Place Notebook**: [forams-dinov2-b-controlled-2xt4](https://www.kaggle.com/code/hanifnoerrofiq/forams-dinov2-b-controlled-2xt4) (Pulled in `references/3rd-place`)
