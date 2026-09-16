@@ -29,13 +29,23 @@ Separated localization and classification. Fine-tuned a DINOv2-Base vision trans
 
 ---
 
-## Our Hybrid Strategy
+## Our Approach: Optimizing the 2nd Place Solution
 
-Based on the strengths of the top competitors, we are building a hybrid pipeline that combines the best of both worlds:
-1. **The Data Engine (from 1st & 2nd Place):** We will use procedural data synthesis to artificially pack isolated shells together, perfectly simulating the densely packed test environment. 
-2. **The Architecture (from 3rd Place):** We will use a lightweight, memory-efficient 2.5D architecture (DINOv2 with a CenterNet detector) instead of computationally expensive 3D convolutions.
+We initially attempted to build a hybrid pipeline combining the 3rd place's DINOv2 architecture with the 2nd place's data engine, but faced fundamental incompatibilities with spatial resolutions and fine-tuning.
 
-By combining the synthetic data generator of the top solutions with the blazing fast 2.5D architecture of the 3rd place, we aim to achieve state-of-the-art results. 
+Instead, we pivoted to maximizing the performance of the 2nd place solution (which natively scored 0.73722 Private).
+
+### Hyperparameter Tuning
+We analyzed the 2nd place ensemble configuration (`final_zk.yaml`) and discovered that its default prediction `rejection_threshold` of `0.29` admitted too many false positive detections. We performed a systematic hyperparameter sweep over the threshold, submitting the resulting predictions directly to the Kaggle Leaderboard to pinpoint the true optimal threshold.
+
+By increasing the rejection threshold to `0.45`, we pushed the model's F1 score from **0.73722** to a massive **0.74800** on the Private Leaderboard, bridging a significant portion of the gap to the 1st place score!
+
+![Threshold Sweep Results](reports/threshold_sweep.png)
+
+### Why we couldn't replicate the 1st Place Solution
+The 1st place solution (Caleb Powell & Beckett Sterner) utilized a vastly different architecture that scored 0.76438 (Private). They manually scraped morphological descriptions from an external biology website (`Mikrotax.org`) for every species and trained their model to explicitly answer these biological queries (e.g., "is the shell porous?"). This auxiliary supervision resolved conflation between visually similar classes. We could not replicate this without access to their proprietary scraped taxonomic dataset.
+
+For a detailed analysis, see our [Hyperparameter Tuning Report](reports/hyperparameter_tuning_report.md).
 
 ### Citations and References
 - **Competition Page**: [Forams 2026 - Kaggle](https://www.kaggle.com/competitions/forams-2026)
