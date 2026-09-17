@@ -1,4 +1,4 @@
-# forams-2026-private
+# forams-2026-kaggle
 
 ## Competition Overview
 The goal of this competition, hosted by the QIM Center (DTU Compute), is to detect and classify shells of planktonic foraminifera (forams) inside 3D volumetric micro-CT images.
